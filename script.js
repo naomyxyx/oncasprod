@@ -95,6 +95,14 @@
     if (element) element.innerHTML = component();
   }
 
+  document.querySelectorAll('.brand, .sticky-brand, .footer-brand, #rodape .text-link[href="#inicio"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const destination = `${window.location.pathname}${window.location.search}#inicio`;
+      if (window.location.hash !== '#inicio') history.replaceState(null, '', destination);
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    });
+  });
   const exploreButton = document.querySelector('.hero-explore');
   exploreButton?.addEventListener('click', (event) => {
     const target = document.querySelector('#servicos');
@@ -245,7 +253,7 @@
             pageHeader.classList.remove('nav-intro-wait');
             pageHeader.classList.add('nav-intro-reveal');
             window.setTimeout(() => pageHeader.classList.remove('nav-intro-reveal'), 2300);
-          }, 3400);
+          }, 2400);
 
           const brandElement = pageHeader.querySelector(pageHeader.classList.contains('is-scrolled') ? '.sticky-brand' : '.brand');
           const heroCopy = mobileHero.querySelector('.hero-copy');
@@ -255,7 +263,7 @@
             brandElement?.classList.add('mobile-fade-visible');
             heroCopy?.classList.add('mobile-fade-visible');
           }, 1500);
-          window.setTimeout(() => explore?.classList.add('mobile-fade-visible'), 3400);
+          window.setTimeout(() => explore?.classList.add('mobile-fade-visible'), 2400);
         }
         setPending(false);
         document.documentElement.classList.remove('mobile-intro-pending');

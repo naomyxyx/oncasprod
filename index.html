@@ -4,7 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Onças Prod — produtora artística. Fotografia, audiovisual, comunicação e cultura em movimento." />
-    <meta name="theme-color" content="#fff7e3" />
+    <meta name="theme-color" content="#fff7e3" />    <script>
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.addEventListener('pageshow', () => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        if (navigation?.type === 'reload') {
+          if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+          window.scrollTo(0, 0);
+        }
+      });
+    </script>
     <title>Onças Prod — Produtora artística</title>
     <link rel="icon" href="assets/simbolo.png" type="image/png" />
     <script>if (window.matchMedia("(max-width: 760px)").matches) document.documentElement.classList.add("mobile-intro-pending");</script>
