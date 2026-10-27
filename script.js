@@ -103,6 +103,7 @@
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     });
   });
+
   const exploreButton = document.querySelector('.hero-explore');
   exploreButton?.addEventListener('click', (event) => {
     const target = document.querySelector('#servicos');
@@ -211,6 +212,44 @@
       renderProjectPages();
     });
     renderProjectPages();
+    if ('IntersectionObserver' in window) {
+      const feature = experience.querySelector('.gallery-feature');
+      const visibleCards = previewCards.filter((card) => !card.hidden);
+      const paginationControls = experience.querySelector('.gallery-pagination');
+      const featureArrows = Array.from(experience.querySelectorAll('.gallery-feature-arrow'))
+        .filter((arrow) => getComputedStyle(arrow).display !== 'none');
+      const revealTargets = [];
+      if (feature) {
+        feature.classList.add('gallery-rise-item', 'gallery-rise-feature');
+        feature.style.setProperty('--gallery-rise-delay', '0s');
+        revealTargets.push(feature);
+      }
+      visibleCards.forEach((card, index) => {
+        card.classList.add('gallery-rise-item', 'gallery-rise-card');
+        card.style.setProperty('--gallery-rise-delay', `${0.45 + index * 0.12}s`);
+        revealTargets.push(card);
+      });
+      const controlsDelay = `${0.45 + Math.max(visibleCards.length - 1, 0) * 0.12 + 0.72 + 0.08}s`;
+      if (paginationControls) {
+        paginationControls.classList.add('gallery-rise-item', 'gallery-rise-controls');
+        paginationControls.style.setProperty('--gallery-rise-delay', controlsDelay);
+        revealTargets.push(paginationControls);
+      }
+      featureArrows.forEach((arrow) => {
+        arrow.classList.add('gallery-rise-item', 'gallery-rise-arrow');
+        arrow.style.setProperty('--gallery-rise-delay', controlsDelay);
+        revealTargets.push(arrow);
+      });
+      const galleryItemObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.remove('gallery-rise-item');
+          entry.target.classList.add('gallery-rise-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -48px 0px', threshold: 0 });
+      revealTargets.forEach((target) => galleryItemObserver.observe(target));
+    }
     experience.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && !popup.hidden) closeGallery();
     });

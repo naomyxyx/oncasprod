@@ -4086,3 +4086,103 @@ body {
     box-shadow: 0 9px 24px rgba(65, 38, 21, .12), inset 0 1px 0 rgba(255,255,255,.72), inset 0 -1px 0 rgba(255,255,255,.16) !important;
   }
 }
+
+/* Keep the mobile sticky navigation pill full-sized and aligned while scrolling. */
+@media (max-width: 760px) {
+  #cabecalho.is-scrolled {
+    height: 56px !important;
+    min-height: 56px !important;
+    margin-bottom: 136px !important;
+    overflow: visible !important;
+  }
+  #cabecalho.is-scrolled .header-inner {
+    height: 56px !important;
+    min-height: 56px !important;
+    grid-template-columns: 48px minmax(0, 1fr) !important;
+    grid-template-rows: 56px !important;
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+  #cabecalho.is-scrolled {
+    background: #fff7e3 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: 0 4px 18px rgba(37, 23, 18, .1) !important;
+  }
+  #cabecalho.is-scrolled nav {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    justify-content: space-around;
+    padding: 0 6px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+  #cabecalho.is-scrolled nav > a { flex: 0 1 auto; white-space: nowrap; }
+}
+/* Mobile gallery reveal: feature first, then preview cards, pagination and arrows. */
+@media (max-width: 760px) {
+  #trabalhos.gallery-reveal-pending .gallery-feature,
+  #trabalhos.gallery-reveal-pending .gallery-preview-card:not([hidden]),
+  #trabalhos.gallery-reveal-pending .gallery-pagination,
+  #trabalhos.gallery-reveal-pending .gallery-feature-arrow {
+    opacity: 0;
+    translate: 0 28px;
+  }
+  #trabalhos.gallery-revealed .gallery-feature {
+    animation: galleryRiseIn .68s cubic-bezier(.2,.75,.25,1) 0s both;
+  }
+  #trabalhos.gallery-revealed .gallery-preview-card:not([hidden]) {
+    animation: galleryRiseIn .58s cubic-bezier(.2,.75,.25,1) .68s both;
+  }
+  #trabalhos.gallery-revealed .gallery-preview-card:not([hidden]):nth-child(2) {
+    animation-delay: .82s;
+  }
+  #trabalhos.gallery-revealed .gallery-preview-card:not([hidden]):nth-child(3) {
+    animation-delay: .96s;
+  }
+  #trabalhos.gallery-revealed .gallery-pagination {
+    animation: galleryRiseIn .58s cubic-bezier(.2,.75,.25,1) 1.58s both;
+  }
+  #trabalhos.gallery-revealed .gallery-feature-arrow {
+    animation: galleryRiseIn .5s cubic-bezier(.2,.75,.25,1) 1.58s both;
+  }
+
+}
+@keyframes galleryRiseIn {
+  from { opacity: 0; translate: 0 28px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  #trabalhos.gallery-reveal-pending .gallery-feature,
+  #trabalhos.gallery-reveal-pending .gallery-preview-card:not([hidden]),
+  #trabalhos.gallery-reveal-pending .gallery-pagination,
+  #trabalhos.gallery-reveal-pending .gallery-feature-arrow,
+  #trabalhos.gallery-revealed .gallery-feature,
+  #trabalhos.gallery-revealed .gallery-preview-card:not([hidden]),
+  #trabalhos.gallery-revealed .gallery-pagination,
+  #trabalhos.gallery-revealed .gallery-feature-arrow {
+    opacity: 1;
+    translate: none;
+    animation: none;
+  }
+}
+/* Restore the original wavy gallery-to-about divider on mobile. */
+@media (max-width: 760px) {
+  #sobre .about-section-divider {
+    display: block !important;
+    height: 30px;
+  }
+}
+/* Reveal each gallery block when that block reaches the viewport. */
+.gallery-rise-item {
+  opacity: 0;
+  translate: 0 34px;
+}
+.gallery-rise-visible {
+  animation: galleryRiseIn .72s cubic-bezier(.2,.75,.25,1) var(--gallery-rise-delay, 0s) both;
+}
