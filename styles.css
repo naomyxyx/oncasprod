@@ -1252,6 +1252,10 @@ a.contact-button:hover { background: var(--pink); color: #000; transform: transl
 
 /* Texto dos cards de serviços em preto para manter o contraste sobre o vidro. */
 .service-body h3, .service-body p { color: #000; }
+.services-cta { margin: 30px 0 0; padding: 19px 22px; border-left: 4px solid var(--pink); background: #fff4f8; color: var(--ink); }
+.services-cta p { font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; line-height: 1.5; }
+.services-cta a { display: inline-block; margin-top: 8px; color: var(--ink); font-size: 14px; font-weight: 700; letter-spacing: 0; text-decoration: underline; text-decoration-color: var(--pink); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.services-cta a:hover { color: var(--pink); }
 
 /* Inverte os fundos dos mini navegadores: barra estampada e conteúdo branco. */
 .service-windowbar {
@@ -2179,9 +2183,25 @@ body {
 }
 #trabalhos .gallery-popup-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(10px, 1.5vw, 20px);
 }
+#trabalhos .gallery-full-portfolio-wrap { display: flex; justify-content: center; margin-top: 22px; }
+#trabalhos .gallery-full-portfolio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 20px;
+  background: var(--pink);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .2s ease, background-color .2s ease;
+}
+#trabalhos a.gallery-full-portfolio:hover { transform: translateY(-2px); background: #b80060; }
+#trabalhos .gallery-full-portfolio.is-pending { opacity: .58; cursor: not-allowed; }
 #trabalhos .gallery-popup-photo {
   aspect-ratio: 1;
   min-width: 0;
@@ -2232,7 +2252,7 @@ body {
 #trabalhos .gallery-preview-actions button { min-height: 36px; padding: 8px 12px; font-size: 11px; }
 #trabalhos .gallery-image-placeholder { display: grid; place-items: center; color: #fff7e3; font-size: 12px; }
 @media (max-width: 900px) {
-  #trabalhos .gallery-popup-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #trabalhos .gallery-popup-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   #trabalhos .gallery-feature { grid-template-columns: 1fr; }

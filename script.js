@@ -26,19 +26,23 @@
       : '<div class="hero-photo hero-photo-placeholder" role="img" aria-label="Espaço reservado para a fotografia real das duas profissionais"><span class="placeholder-kicker">Retrato da dupla</span><span class="placeholder-note">A foto real entra aqui</span></div>';
     return `<div class="hero-copy">${data.descricao ? `<p class="eyebrow"><span class="tiny-dot"></span> ${escapeHTML(data.descricao)}</p>` : ""}
       <h1 id="titulo"><span class="hero-title-desktop">${escapeHTML(data.titulo)}</span><span class="hero-title-mobile">Produtora artística e cultural</span></h1>${data.introducao ? `<p class="lead">${escapeHTML(data.introducao)}</p>` : ""}</div>
-      <figure class="hero-visual"><div class="hero-photo-stack"><img class="hero-stack-photo hero-stack-photo--back" src="assets/IMG_3132-stack.jpg" alt="" aria-hidden="true" loading="lazy"><img class="hero-stack-photo hero-stack-photo--middle" src="assets/IMG_3142-stack.jpg" alt="" aria-hidden="true" loading="lazy"><div class="hero-photo-frame">${photo}</div></div>
+      <figure class="hero-visual"><div class="hero-photo-stack"><img class="hero-stack-photo hero-stack-photo--back" src="assets/oncascapa2.jpg" alt="" aria-hidden="true" loading="lazy"><img class="hero-stack-photo hero-stack-photo--middle" src="assets/oncascapa3.jpg" alt="" aria-hidden="true" loading="lazy"><div class="hero-photo-frame">${photo}</div></div>
       <span class="visual-sticker" aria-hidden="true">feito<br>por nós</span></figure><a class="hero-explore" href="#servicos">EXPLORAR</a>`;
   }
 
   function Services() {
     const services = Array.isArray(data.servicos) ? data.servicos : [];
-    return `<div class="section-heading"><div><h2 id="titulo-servicos">Serviços</h2></div></div><div class="services-grid">${services.map((item) => `<article class="service service-window"><div class="service-windowbar" aria-hidden="true"><span class="window-controls"><i></i><i></i><i></i></span><span class="window-address"><span class="window-search-icon"></span> oncasprod.com/servicos</span><span class="window-menu">...</span></div><div class="service-body"><h3>${escapeHTML(item.titulo)}</h3><p>${escapeHTML(item.texto)}</p></div></article>`).join('')}</div>`;
+    return `<div class="section-heading"><div><h2 id="titulo-servicos">Serviços</h2></div></div><div class="services-grid">${services.map((item) => `<article class="service service-window"><div class="service-windowbar" aria-hidden="true"><span class="window-controls"><i></i><i></i><i></i></span><span class="window-address"><span class="window-search-icon"></span> oncasprod.com/servicos</span><span class="window-menu">...</span></div><div class="service-body"><h3>${escapeHTML(item.titulo)}</h3><p>${escapeHTML(item.texto)}</p></div></article>`).join('')}</div><div class="services-cta"><p>Cada trabalho tem um orçamento próprio, conforme o tipo de serviço e o tamanho do projeto.</p><a href="#contato">Saiba mais</a></div>`;
   }
 
   function Works() {
     const projects = Array.isArray(data.trabalhos) ? data.trabalhos : [];
-    const works = projects.length ? projects : Array.from({ length: 3 }, (_, i) => ({ titulo: 'Baile das Onças', categoria: '', imagem: '' }));
+    const works = projects.length ? projects : Array.from({ length: 4 }, () => ({ titulo: 'Baile das Onças', categoria: '', imagem: '' }));
     const projectTitle = works[0]?.titulo || 'Baile das Onças';
+    const portfolioUrl = /^https?:\/\//i.test(data.portfolioUrl || '') ? safeURL(data.portfolioUrl) : '';
+    const fullGalleryLink = portfolioUrl
+      ? `<a class="gallery-full-portfolio" href="${portfolioUrl}" target="_blank" rel="noopener noreferrer">Ver toda a galeria</a>`
+      : '<span class="gallery-full-portfolio is-pending" aria-disabled="true">Ver toda a galeria</span>';
     const photoMarkup = (item, className = '') => {
       const image = item.imagem ? safeURL(item.imagem) : '';
       return image
@@ -54,6 +58,7 @@
         <section class="gallery-popup" data-gallery-popup role="dialog" aria-modal="false" aria-labelledby="gallery-popup-title" hidden>
           <div class="gallery-popup-heading"><div><p class="eyebrow">Galeria do projeto</p><h3 id="gallery-popup-title">${escapeHTML(projectTitle)}</h3></div><button class="gallery-close-button" type="button" data-close-gallery>Fechar galeria</button></div>
           <div class="gallery-popup-grid">${works.map((item, index) => `<button class="gallery-popup-photo" type="button" data-modal-photo="${index}" aria-label="Exibir foto ${index + 1} no destaque">${photoMarkup(item)}</button>`).join('')}</div>
+          <div class="gallery-full-portfolio-wrap">${fullGalleryLink}</div>
         </section>
         <div class="gallery-preview-grid">${Array.from({ length: 9 }, (_, slot) => { const page = Math.floor(slot / 3) + 1; return `<article class="gallery-preview-card" data-project-page="${page}"${page === 1 ? '' : ' hidden'}><div class="gallery-preview-placeholder">Outros projetos</div><div class="gallery-preview-actions"><span>Clique para ver as fotos</span><button type="button" data-preview-photo="0">Abrir galeria</button></div></article>`; }).join('')}</div>
         <nav class="gallery-pagination" aria-label="Páginas de projetos"><span>Página</span>${[1, 2, 3].map((page) => `<button type="button" data-project-page-button="${page}" aria-label="Página ${page}" aria-current="${page === 1 ? 'page' : 'false'}">${page}</button>`).join('')}</nav>
